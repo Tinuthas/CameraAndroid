@@ -51,34 +51,17 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK) {
             if(requestCode == 1) {
-                try {
-                    camera();
-                }catch (ImageException e) {
 
-                    files(data);
-                }catch (Exception e) {
-                    e.printStackTrace();
+                Bitmap bitmap = BitmapFactory.decodeFile(pathToFile);
+                if(bitmap != null) {
+                    imageView.setImageBitmap(bitmap);
+                }else {
+                    Uri selectImage = data.getData();
+                    imageView.setImageURI(selectImage);
                 }
-
             }
         }
 
-
-    }
-
-    private void files(Intent data) {
-        Log.i("logan", "File");
-        Uri selectImage = data.getData();
-        imageView.setImageURI(selectImage);
-    }
-
-    private void camera() throws ImageException {
-        Bitmap bitmap = BitmapFactory.decodeFile(pathToFile);
-        Log.i("logan", "Bitmap nulo" + bitmap);
-        if(bitmap == null ) {
-            throw new ImageException("Não é imagem");
-        }
-        imageView.setImageBitmap(bitmap);
 
     }
 
